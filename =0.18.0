@@ -1,0 +1,6 @@
+Looking in indexes: https://pypi.org/simple, https://pypi.ngc.nvidia.com
+Collecting prometheus-client
+  Downloading prometheus_client-0.21.1-py3-none-any.whl.metadata (1.8 kB)
+Downloading prometheus_client-0.21.1-py3-none-any.whl (54 kB)
+Installing collected packages: prometheus-client
+Successfully installed prometheus-client-0.21.1

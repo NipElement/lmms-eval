@@ -236,12 +236,12 @@ class Qwen2_5_VL_Interleave(lmms):
             if isinstance(contexts, tuple):
                 contexts = list(contexts)
 
-            # for i in range(len(contexts)):
-            #     for j in range(32):
-            #         if f"<image {j}>" in contexts[i]:
-            #             contexts[i] = contexts[i].replace(f"<image {j}>", "<image>")
-            #         if f"\\<image {j}\\>" in contexts[i]:
-            #             contexts[i] = contexts[i].replace(f"\\<image {j}\\>", "<image>")
+            for i in range(len(contexts)):
+                for j in range(32):
+                    if f"<image_{j}>" in contexts[i]:
+                        contexts[i] = contexts[i].replace(f"<image_{j}>", "<image>")
+                    # if f"\\<image_{j}\\>" in contexts[i]:
+                    #     contexts[i] = contexts[i].replace(f"\\<image {j}\\>", "<image>")
             # if "<image>" in contexts[i]:
             #     contexts[i] = contexts[i].replace("<image>", "")
             # print(contexts[i])
@@ -253,8 +253,8 @@ class Qwen2_5_VL_Interleave(lmms):
 
                 # print("context", context)
 
-                if "<image 1>" in context:
-                    context = context.split("<image 1>")
+                if "<image>" in context:
+                    context = context.split("<image>")
                     # print(json.dumps(context, indent=4))
                 else:
                     context = [context]
@@ -330,6 +330,7 @@ class Qwen2_5_VL_Interleave(lmms):
                             content.append({"type": "text", "text": context[i]})
                             content.append(image_content[i])
                         content.append({"type": "text", "text": context[-1]})
+                        message.append({"role": "user", "content": content})
                         # print("content", content)
                     else:
                         message.append({"role": "user", "content": [{"type": "text", "text": context}]})
@@ -357,7 +358,7 @@ class Qwen2_5_VL_Interleave(lmms):
                 inputs = inputs.to(self.device)
 
             if "max_new_tokens" not in gen_kwargs:
-                gen_kwargs["max_new_tokens"] = 128
+                gen_kwargs["max_new_tokens"] = 2048
             if "temperature" not in gen_kwargs:
                 gen_kwargs["temperature"] = 0
             if "top_p" not in gen_kwargs:

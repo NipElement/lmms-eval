@@ -2,5 +2,7 @@ group: olympiadbench
 task:
 - olympiadbench_test_en
 - olympiadbench_test_cn
+- olympiadbench_test_en_oe
+- olympiadbench_test_en_oe_cot_num_10
 metadata:
   - version: 0.0

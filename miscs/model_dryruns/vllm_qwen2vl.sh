@@ -8,13 +8,13 @@ export VLLM_WORKER_MULTIPROC_METHOD=spawn
 export NCCL_BLOCKING_WAIT=1
 export NCCL_TIMEOUT=18000000
 export NCCL_DEBUG=DEBUG
-
+export CUDA_VISIBLE_DEVICES=0
 python3 -m lmms_eval \
     --model vllm \
-    --model_args model_version=Qwen/Qwen2-VL-7B-Instruct,tensor_parallel_size=4 \
-    --tasks mme,gsm8k_cot_self_consistency,mmmu_val \
-    --batch_size 64 \
+    --model_args model_version=/data/yuansheng/checkpoint/Qwen2.5-VL-7B-Instruct,tensor_parallel_size=1 \
+    --tasks olympiadbench_test_en_oe \
+    --batch_size 1 \
     --log_samples \
     --log_samples_suffix vllm \
     --output_path ./logs \
-    --limit=64
+    --verbosity=DEBUG
