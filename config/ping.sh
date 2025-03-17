@@ -1,7 +1,7 @@
 #!/bin/bash
-export MODELSCOPE_CACHE='/map-vepfs/huggingface'
-export HF_HOME='/map-vepfs/huggingface'
-export CUDA_VISIBLE_DEVICES=1,2,3
+export HF_HOME='/data/yuansheng/cache'
+export CUDA_VISIBLE_DEVICES=1,5,6,7
+# pip install qwen_vl_utils
 
 # accelerate launch --num_processes=1 --gpu_ids 0,1,2,3,4,5,6,7 --main_process_port=12345 -m lmms_eval \
 #     --model qwen2_5_vl_interleave \
@@ -31,4 +31,4 @@ python -m lmms_eval \
     --output_path ./eval_results/olympiadbench_test_cn_oe \
     --log_samples
 
-vllm serve /map-vepfs/huggingface/models/Qwen2.5-VL-7B-Instruct --tensor-parallel-size 3 --limit-mm-per-prompt image=20 
+vllm serve /data/yuansheng/checkpoint/Qwen2.5-VL-7B-Instruct --tensor-parallel-size 4 --limit-mm-per-prompt image=20 
