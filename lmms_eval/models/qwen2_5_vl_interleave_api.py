@@ -329,7 +329,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
                 
                 # 设置API请求参数
                 if "max_tokens" not in gen_kwargs:
-                    gen_kwargs["max_tokens"] = 1024
+                    gen_kwargs["max_tokens"] = 2048
                 if "temperature" not in gen_kwargs:
                     gen_kwargs["temperature"] = 0
                 if "top_p" not in gen_kwargs:
