@@ -42,7 +42,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
         self,
         api_url: str = "http://127.0.0.1:8000/v1/chat/completions",
         api_key: Optional[str] = None,
-        model_name: str = "/data/yuansheng/checkpoint/Qwen2.5-VL-7B-Instruct",
+        model_name: str = "/data/yuansheng/checkpoint/mammoth_mix_60K_icl_28K_example_num_10/checkpoint-3602",
         batch_size: Optional[Union[int, str]] = 1,
         max_num_frames: int = 32,
         use_custom_video_loader: Optional[bool] = False,
@@ -329,7 +329,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
                 
                 # 设置API请求参数
                 if "max_tokens" not in gen_kwargs:
-                    gen_kwargs["max_tokens"] = 2048
+                    gen_kwargs["max_tokens"] = 1024
                 if "temperature" not in gen_kwargs:
                     gen_kwargs["temperature"] = 0
                 if "top_p" not in gen_kwargs:

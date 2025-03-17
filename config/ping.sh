@@ -1,18 +1,16 @@
 #!/bin/bash
 export HF_HOME='/data/yuansheng/cache'
-export CUDA_VISIBLE_DEVICES=1,5,6,7
+export CUDA_VISIBLE_DEVICES=0,5,6,7
 # pip install qwen_vl_utils
 
-# accelerate launch --num_processes=1 --gpu_ids 0,1,2,3,4,5,6,7 --main_process_port=12345 -m lmms_eval \
-#     --model qwen2_5_vl_interleave \
-#     --model_args=pretrained='/map-vepfs/huggingface/models/Qwen2.5-VL-7B-Instruct',max_pixels=12845056,min_pixels=3136 \
-#     --gen_kwargs=max_new_tokens=1024 \
-#     --tasks olympiadbench_test_en_oe_cot_num_10 \
-#     --verbosity=DEBUG \
-#     --batch_size 1 \
-#     --output_path ./eval_results/ \
-#     --log_samples \
-#     --limit 4
+# en
+python -m lmms_eval \
+    --model qwen2_5_vl_interleave_api \
+    --tasks olympiadbench_test_en_oe \
+    --verbosity=DEBUG \
+    --batch_size 32 \
+    --output_path ./eval_results/olympiadbench_test_en_oe \
+    --log_samples
 
 python -m lmms_eval \
     --model qwen2_5_vl_interleave_api \
@@ -22,13 +20,28 @@ python -m lmms_eval \
     --output_path ./eval_results/olympiadbench_test_en_oe_cot_num_10 \
     --log_samples 
 
-
+# cn
 python -m lmms_eval \
     --model qwen2_5_vl_interleave_api \
     --tasks olympiadbench_test_cn_oe \
     --verbosity=DEBUG \
     --batch_size 32 \
     --output_path ./eval_results/olympiadbench_test_cn_oe \
-    --log_samples
+    --log_samples \
+    --limit 233
 
-vllm serve /data/yuansheng/checkpoint/Qwen2.5-VL-7B-Instruct --tensor-parallel-size 4 --limit-mm-per-prompt image=20 
+python -m lmms_eval \
+    --model qwen2_5_vl_interleave_api \
+    --tasks olympiadbench_test_cn_oe_cot_num_10 \
+    --verbosity=DEBUG \
+    --batch_size 32 \
+    --output_path ./eval_results/olympiadbench_test_cn_oe_cot_num_10 \
+    --log_samples \
+    --limit 233
+
+vllm serve /data/yuansheng/checkpoint/Qwen2.5-VL-7B-Instruct --tensor-parallel-size 4 --limit-mm-per-prompt image=20 --gpu-memory-utilization 0.8
+
+# change config.json rope_scaling type "dynamic" to "mrope"
+vllm serve /data/yuansheng/checkpoint/mammoth_mix_60K_icl_28K_example_num_10/checkpoint-3602 --tensor-parallel-size 4 --limit-mm-per-prompt image=20 --gpu-memory-utilization 0.8
+
+vllm serve /data/yuansheng/checkpoint/mammoth_mix_86K_icl_27K_max_token/checkpoint-5434 --tensor-parallel-size 4 --limit-mm-per-prompt image=20 --gpu-memory-utilization 0.8
