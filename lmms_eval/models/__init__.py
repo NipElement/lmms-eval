@@ -45,6 +45,7 @@ AVAILABLE_MODELS = {
     "phi3v": "Phi3v",
     "qwen2_5_vl": "Qwen2_5_VL",
     "qwen2_5_vl_interleave": "Qwen2_5_VL_Interleave",
+    "qwen2_5_vl_interleave_api": "Qwen2_5_VL_Interleave_API",
     "qwen2_audio": "Qwen2_Audio",
     "qwen2_vl": "Qwen2_VL",
     "qwen_vl": "Qwen_VL",
