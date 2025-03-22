@@ -42,7 +42,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
         self,
         api_url: str = "http://127.0.0.1:8000/v1/chat/completions",
         api_key: Optional[str] = None,
-        model_name: str = "/data/yuansheng/checkpoint/mammoth_mix_60K_icl_28K_example_num_10/checkpoint-3602",
+        model_name: str = "/data/yuansheng/checkpoint/mammoth_mix_57K_icl_26K_multi_turn_example_num_10",
         batch_size: Optional[Union[int, str]] = 1,
         max_num_frames: int = 32,
         use_custom_video_loader: Optional[bool] = False,

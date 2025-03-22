@@ -1,0 +1,106 @@
+{
+  "results": {
+    "olympiadbench_test_en_oe": {
+      "alias": "olympiadbench_test_en_oe",
+      "exact_match,none": 0.08583690987124463,
+      "exact_match_stderr,none": 0.018390980591953834
+    }
+  },
+  "group_subtasks": {
+    "olympiadbench_test_en_oe": []
+  },
+  "configs": {
+    "olympiadbench_test_en_oe": {
+      "task": "olympiadbench_test_en_oe",
+      "dataset_path": "yuanshengni/OlympiadBench-OE",
+      "dataset_kwargs": {
+        "token": true
+      },
+      "test_split": "test_en",
+      "full_docs": false,
+      "process_results_use_image": false,
+      "doc_to_visual": "<function olympiadbench_doc_to_visual at 0x724e9e8de440>",
+      "doc_to_text": "<function olympiadbench_doc_to_text at 0x724e9e8dea70>",
+      "doc_to_target": "answer",
+      "process_results": "<function olympiadbench_process_results at 0x724e9e8df0a0>",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "submission",
+          "aggregation": "<function olympiadbench_aggregate_results at 0x724e9e8df6d0>",
+          "higher_is_better": true
+        },
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "ASSISTANT:"
+        ],
+        "max_new_tokens": 1024,
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "num_beams": 1,
+        "do_sample": false
+      },
+      "repeats": 1,
+      "should_decontaminate": false
+    }
+  },
+  "versions": {
+    "olympiadbench_test_en_oe": "Yaml"
+  },
+  "n-shot": {
+    "olympiadbench_test_en_oe": 0
+  },
+  "higher_is_better": {
+    "olympiadbench_test_en_oe": {
+      "submission": true,
+      "exact_match": true
+    }
+  },
+  "n-samples": {
+    "olympiadbench_test_en_oe": {
+      "original": 233,
+      "effective": 233
+    }
+  },
+  "config": {
+    "model": "qwen2_5_vl_interleave_api",
+    "model_args": "",
+    "batch_size": "32",
+    "batch_sizes": [],
+    "device": null,
+    "use_cache": null,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": "",
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "git_hash": "54dfb08",
+  "date": "20250322_015912",
+  "task_hashes": {
+    "olympiadbench_test_en_oe": "21eb5fea99ff58e7009ca7cb40f5fa619a4dc00b0cf701036e9b17fa07b08598"
+  },
+  "model_source": "qwen2_5_vl_interleave_api",
+  "model_name": "",
+  "model_name_sanitized": "",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": false,
+  "chat_template": null,
+  "chat_template_sha": null,
+  "start_time": 308338.116063037,
+  "end_time": 309489.162809397,
+  "total_evaluation_time_seconds": "1151.0467463599634"
+}
