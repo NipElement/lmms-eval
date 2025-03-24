@@ -235,8 +235,6 @@ class MathVistaEvaluator:
         # For CoT, extract only the part after "Current Question" to save tokens
         if "Current Question:" in problem["query"]:
             query = problem["query"].split("Current Question:", 1)[1]
-            print(query)
-            exit()
         else:
             query = problem["query"]
 

@@ -120,7 +120,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
 
     # 添加新的方法来发送单个API请求
     # 修改 _send_api_request 方法，添加重试逻辑
-    def _send_api_request(self, request_body, task, split, doc_id_val, max_retries=5):
+    def _send_api_request(self, request_body, task, split, doc_id_val, max_retries=20):
         """发送单个API请求并处理结果，失败时自动重试"""
         retry_count = 0
         last_exception = None
