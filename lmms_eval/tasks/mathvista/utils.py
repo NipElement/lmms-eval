@@ -39,6 +39,55 @@ elif API_TYPE == "azure":
 mathvista_evaluator = MathVistaEvaluator(api_key=API_KEY, gpt_model=config["metadata"]["gpt_eval_model_name"])
 
 
+def mathvista_cot_doc_to_visual(doc):
+    return [image.convert("RGB") for image in doc["cot_images"]]
+
+def mathvista_cot_doc_to_text(doc, lmms_eval_specific_kwargs=None):
+    problem = {
+        "question_type": doc["question_type"],
+        "answer_type": doc["answer_type"],
+        "cot_question": doc["cot_question"],
+        "answer": doc["answer"] if "answer" in doc else None,
+    }
+    query_prompt = mathvista_evaluator.create_cot_one_query(
+        problem
+    )
+    return query_prompt
+
+def mathvista_cot_process_results(doc, results):
+    prediction = results[0].strip()
+    problem = {
+        "question_type": doc["question_type"],
+        "answer_type": doc["answer_type"],
+        "query": doc["cot_question"],
+        "choices": doc["choices"],
+        "answer": doc["answer"] if "answer" in doc else None,
+        "precision": doc["precision"] if "precision" in doc else 0,
+    }
+    extraction = mathvista_evaluator.extract_answer(prediction, problem)
+
+    prediction = mathvista_evaluator.normalize_extracted_answer(extraction, problem["choices"], problem["question_type"], problem["answer_type"], problem["precision"])
+    # set test set answer to None
+    true_false = mathvista_evaluator.safe_equal(prediction, problem["answer"]) if problem["answer"] is not None else False
+
+    result = {
+        "question_id": doc["pid"],
+        "query": doc["cot_question"],
+        "choices": doc["choices"],
+        "answer": doc["answer"] if "answer" in doc else None,
+        "extraction": extraction,
+        "prediction": prediction,
+        "true_false": true_false,
+        "question_type": doc["question_type"],
+        "answer_type": doc["answer_type"],
+        "precision": doc["precision"] if "precision" in doc else 0
+    }
+
+    return {
+        "gpt_eval_score": result,
+        "submission": result,
+    }
+
 def mathvista_doc_to_visual(doc):
     return [doc["decoded_image"].convert("RGB")]
 

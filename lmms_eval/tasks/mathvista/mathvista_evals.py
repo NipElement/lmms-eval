@@ -229,6 +229,25 @@ class MathVistaEvaluator:
         full_prompt = f"{demo_prompt}\n\n{test_prompt}\n\nExtracted answer: "
         return full_prompt
 
+    def extract_cot_answer(self, response, problem):
+        question_type = problem["question_type"]
+        answer_type = problem["answer_type"]
+        query = problem["cot_question"]
+
+        if not response:
+            return ""
+
+        # general extraction
+        try:
+            full_prompt = self.create_test_prompt(DEMO_PROMPT, query, response)
+            extraction = self.get_chat_response(full_prompt, temperature=0, max_tokens=256, n=1)
+            return extraction
+        except Exception as e:
+            eval_logger.error(e)
+            eval_logger.error(f"Error in extracting answer for problem")
+
+        return ""
+
     def extract_answer(self, response, problem, quick_extract=False):
         question_type = problem["question_type"]
         answer_type = problem["answer_type"]
@@ -572,3 +591,13 @@ class MathVistaEvaluator:
         query = demo_prompt + "\n\n" + test_query
         query = query.strip()
         return query
+
+    def create_cot_one_query(self, problem):
+        question_type = problem["question_type"]
+        query = problem["cot_question"]
+        PROMPT_TEMPLATES = {
+            'multi_choice': "Please answer the question with detailed step-by-step reasoning, clearly explaining the logical process before stating the final answer in the format: 'The answer is: [option letter]'.",
+            'free_form': "Please answer the question with detailed step-by-step reasoning, clearly explaining the logical process before stating the final answer in the format: 'The answer is: [single word or phrase]'."
+        }
+        query += "\n" + PROMPT_TEMPLATES.get(question_type)
+        return query.strip()

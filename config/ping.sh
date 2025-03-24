@@ -1,6 +1,6 @@
 #!/bin/bash
 export HF_HOME='/data/yuansheng/cache'
-export CUDA_VISIBLE_DEVICES=3,4,5,7
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 # pip install qwen_vl_utils
 # pip install antlr4-python3-runtime==4.11
 
@@ -47,3 +47,15 @@ vllm serve /data/yuansheng/checkpoint/mammoth_mix_60K_icl_28K_example_num_10/che
 vllm serve /data/yuansheng/checkpoint/mammoth_mix_86K_icl_27K_max_token/checkpoint-5434 --tensor-parallel-size 4 --limit-mm-per-prompt image=20 --gpu-memory-utilization 0.8
 vllm serve /data/yuansheng/checkpoint/mammoth_mix_57K_icl_26K_multi_turn_example_num_10 --tensor-parallel-size 4 --limit-mm-per-prompt image=20 --gpu-memory-utilization 0.8
 vllm serve /data/yuansheng/checkpoint/mammoth_mix_88K_icl_27K_default --tensor-parallel-size 4 --limit-mm-per-prompt image=20 --gpu-memory-utilization 0.8
+
+
+# mathvista
+
+python -m lmms_eval \
+    --model qwen2_5_vl_interleave_api \
+    --tasks mathvista_testmini_cot_num_10 \
+    --verbosity=DEBUG \
+    --batch_size 32 \
+    --output_path ./eval_results/mathvista_testmini_cot_num_10 \
+    --log_samples \
+    --limit 4
