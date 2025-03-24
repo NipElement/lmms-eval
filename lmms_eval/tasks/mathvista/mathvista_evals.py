@@ -232,7 +232,11 @@ class MathVistaEvaluator:
     def extract_cot_answer(self, response, problem):
         question_type = problem["question_type"]
         answer_type = problem["answer_type"]
-        query = problem["cot_question"]
+        # For CoT, extract only the part after "Current Question" to save tokens
+        if "Current Question" in problem["cot_question"]:
+            query = problem["cot_question"].split("Current Question", 1)[1]
+        else:
+            query = problem["cot_question"]
 
         if not response:
             return ""

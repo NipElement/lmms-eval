@@ -63,8 +63,9 @@ def mathvista_cot_process_results(doc, results):
         "choices": doc["choices"],
         "answer": doc["answer"] if "answer" in doc else None,
         "precision": doc["precision"] if "precision" in doc else 0,
+        "metadata": doc["metadata"],
     }
-    extraction = mathvista_evaluator.extract_answer(prediction, problem)
+    extraction = mathvista_evaluator.extract_cot_answer(prediction, problem)
 
     prediction = mathvista_evaluator.normalize_extracted_answer(extraction, problem["choices"], problem["question_type"], problem["answer_type"], problem["precision"])
     # set test set answer to None
@@ -80,7 +81,8 @@ def mathvista_cot_process_results(doc, results):
         "true_false": true_false,
         "question_type": doc["question_type"],
         "answer_type": doc["answer_type"],
-        "precision": doc["precision"] if "precision" in doc else 0
+        "precision": doc["precision"] if "precision" in doc else 0,
+        "metadata": doc["metadata"],
     }
 
     return {
@@ -151,6 +153,8 @@ def mathvista_process_results(doc, results):
 
 
 def mathvista_aggregate_results(results, args, *, calculate_gain=False, random_scores=None):
+    print("[DEBUG]: results")
+    print(results[0])
     split_flag = results[0]["metadata"]["split"]
     full_pids = [result["question_id"] for result in results]
     total = len(results)

@@ -13,7 +13,7 @@ generation_kwargs:
   top_p: 1.0
   num_beams: 1
   do_sample: false
-process_results: !function utils.mathvista_process_results
+process_results: !function utils.mathvista_cot_process_results
 metric_list:
   - metric: gpt_eval_score
     aggregation: !function utils.mathvista_aggregate_results

@@ -58,4 +58,4 @@ python -m lmms_eval \
     --batch_size 32 \
     --output_path ./eval_results/mathvista_testmini_cot_num_10 \
     --log_samples \
-    --limit 4
+    --limit 8
