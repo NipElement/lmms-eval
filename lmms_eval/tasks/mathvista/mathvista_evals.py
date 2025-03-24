@@ -233,10 +233,12 @@ class MathVistaEvaluator:
         question_type = problem["question_type"]
         answer_type = problem["answer_type"]
         # For CoT, extract only the part after "Current Question" to save tokens
-        if "Current Question" in problem["cot_question"]:
-            query = problem["cot_question"].split("Current Question", 1)[1]
+        if "Current Question:" in problem["query"]:
+            query = problem["query"].split("Current Question:", 1)[1]
+            print(query)
+            exit()
         else:
-            query = problem["cot_question"]
+            query = problem["query"]
 
         if not response:
             return ""

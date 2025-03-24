@@ -153,8 +153,6 @@ def mathvista_process_results(doc, results):
 
 
 def mathvista_aggregate_results(results, args, *, calculate_gain=False, random_scores=None):
-    print("[DEBUG]: results")
-    print(results[0])
     split_flag = results[0]["metadata"]["split"]
     full_pids = [result["question_id"] for result in results]
     total = len(results)

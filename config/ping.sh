@@ -55,7 +55,6 @@ python -m lmms_eval \
     --model qwen2_5_vl_interleave_api \
     --tasks mathvista_testmini_cot_num_10 \
     --verbosity=DEBUG \
-    --batch_size 32 \
+    --batch_size 64 \
     --output_path ./eval_results/mathvista_testmini_cot_num_10 \
-    --log_samples \
-    --limit 8
+    --log_samples
