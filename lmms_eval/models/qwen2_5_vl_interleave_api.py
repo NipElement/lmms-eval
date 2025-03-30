@@ -42,7 +42,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
         self,
         api_url: str = "http://127.0.0.1:8000/v1/chat/completions",
         api_key: Optional[str] = None,
-        model_name: str = "/data/yuansheng/checkpoint/mammoth_mix_57K_icl_26K_multi_turn_example_num_10",
+        model_name: str = "/data/yuansheng/checkpoint/Qwen2.5-VL-7B-Instruct",
         batch_size: Optional[Union[int, str]] = 1,
         max_num_frames: int = 32,
         use_custom_video_loader: Optional[bool] = False,
@@ -120,7 +120,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
 
     # 添加新的方法来发送单个API请求
     # 修改 _send_api_request 方法，添加重试逻辑
-    def _send_api_request(self, request_body, task, split, doc_id_val, max_retries=20):
+    def _send_api_request(self, request_body, task, split, doc_id_val, max_retries=12):
         """发送单个API请求并处理结果，失败时自动重试"""
         retry_count = 0
         last_exception = None
@@ -149,8 +149,7 @@ class Qwen2_5_VL_Interleave_API(lmms):
                 
                 # 记录重试信息
                 if retry_count < max_retries:
-                    # 使用指数退避策略，每次重试等待时间增加
-                    wait_time = 2 ** retry_count  # 1, 2, 4, 8, 16秒...
+                    wait_time = 5  
                     eval_logger.warning(f"API请求失败 (尝试 {retry_count}/{max_retries}): {str(e)}，{wait_time}秒后重试...")
                     time.sleep(wait_time)  # 等待一段时间后重试
                 else:

@@ -592,7 +592,11 @@ class MathVistaEvaluator:
             test_query = "\n".join([e for e in elements if e != ""])
 
         ### [3] Final query
-        query = demo_prompt + "\n\n" + test_query
+        PROMPT_TEMPLATES = {
+            'multi_choice': "Please answer the question with detailed step-by-step reasoning, clearly explaining the logical process before stating the final answer in the format: 'The answer is: [option letter]'.",
+            'free_form': "Please answer the question with detailed step-by-step reasoning, clearly explaining the logical process before stating the final answer in the format: 'The answer is: [single word or phrase]'."
+        }
+        query = demo_prompt + "\n\n" + test_query  + "\n" + PROMPT_TEMPLATES.get(question_type)
         query = query.strip()
         return query
 
